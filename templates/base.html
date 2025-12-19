@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,77 +69,4 @@
     </script>
 </body>
 
-=======
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}VAYU 🌬️ - Personal Weather Intelligence{% endblock %}</title>
-    <meta name="description" content="VAYU - Personalized weather comfort scoring with beautiful, clean interface">
-
-    <!-- Clean Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding.css') }}">
-
-    <!-- Theme and PWA Meta Tags -->
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    <!-- Favicon -->
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌬️</text></svg>">
-</head>
-
-<body>
-    <!-- Clean Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="{{ url_for('index') }}" class="nav-brand">
-                VAYU 🌬️
-            </a>
-            <div class="nav-links">
-                <a href="{{ url_for('onboarding') }}" class="nav-link">⚙️ Settings</a>
-                <a href="{{ url_for('nasa_info') }}" class="nav-link">🛰️ NASA Integration</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        {% block content %}{% endblock %}
-    </main>
-
-    <!-- Clean Footer -->
-    <footer class="footer">
-        <p>VAYU - Very Adaptive Your Unique Weather Comfort System</p>
-        <p style="opacity: 0.7; font-size: 0.85rem; margin-top: 0.5rem;">
-            Powered by NASA Power API
-        </p>
-    </footer>
-
-    <!-- Enhanced JavaScript -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
-    <!-- Feedback Script -->
-    <script>
-        // Enhanced feedback function is already included in main.js
-        // This is just a fallback for the existing template calls
-        if (typeof provideFeedback === 'undefined') {
-            function provideFeedback(type) {
-                fetch('/feedback', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'feedback=' + encodeURIComponent(type)
-                }).then(() => {
-                    alert('Thanks for your feedback! VAYU is learning...');
-                });
-            }
-        }
-    </script>
-</body>
-
->>>>>>> 4e64647e8d487574b60f65888c9d2c47f4ce8cd4
 </html>
