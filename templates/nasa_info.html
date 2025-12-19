@@ -1,0 +1,651 @@
+{% extends "base.html" %}
+
+{% block title %}NASA POWER Integration - VAYU 🛰️{% endblock %}
+
+{% block content %}
+<div class="nasa-info-app">
+  <div class="nasa-header">
+    <h1>🛰️ NASA POWER Integration</h1>
+    <p>VAYU now powered by NASA's satellite-derived meteorological data</p>
+  </div>
+
+  <!-- NASA POWER Overview -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">🚀</span>
+      <div>
+        <h2>{{ api_info.api_name }} - {{ api_info.full_name }}</h2>
+        <p class="card-subtitle">{{ api_info.description }}</p>
+      </div>
+    </div>
+    
+    <div class="nasa-stats">
+      <div class="stat-item">
+        <span class="stat-value">{{ api_info.spatial_resolution }}</span>
+        <span class="stat-label">Spatial Resolution</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">1981-Present</span>
+        <span class="stat-label">Data Coverage</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ api_info.parameters | length }}+</span>
+        <span class="stat-label">Parameters</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">Global</span>
+        <span class="stat-label">Coverage</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VAYU Competition Features -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">🏆</span>
+      <div>
+        <h2>NASA Competition Enhancement</h2>
+        <p class="card-subtitle">VAYU {{ competition_info.vayu_version }} - {{ competition_info.integration_date }}</p>
+      </div>
+    </div>
+    
+    <div class="feature-grid">
+      {% for feature in competition_info.features %}
+      <div class="feature-item">
+        <span class="feature-icon">✅</span>
+        <span class="feature-text">{{ feature }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- NASA POWER Advantages -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">🌟</span>
+      <div>
+        <h2>Why NASA POWER for VAYU?</h2>
+        <p class="card-subtitle">Advantages of satellite-derived meteorological data</p>
+      </div>
+    </div>
+    
+    <div class="advantages-grid">
+      {% for advantage in api_info.advantages %}
+      <div class="advantage-item">
+        <span class="advantage-icon">🛰️</span>
+        <div>
+          <h4>{{ advantage }}</h4>
+          <p class="advantage-desc">
+            {% if loop.index == 1 %}Worldwide coverage from satellite observations{% endif %}
+            {% if loop.index == 2 %}Research-grade accuracy for scientific applications{% endif %}
+            {% if loop.index == 3 %}Historical data back to 1981 for trend analysis{% endif %}
+            {% if loop.index == 4 %}Temperature, humidity, wind, precipitation, and solar data{% endif %}
+            {% if loop.index == 5 %}Rigorous validation and quality control{% endif %}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Available Parameters -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">📊</span>
+      <div>
+        <h2>Weather Parameters</h2>
+        <p class="card-subtitle">Comprehensive meteorological data from space</p>
+      </div>
+    </div>
+    
+    <div class="parameters-grid">
+      <div class="param-category">
+        <h3>🌡️ Temperature</h3>
+        <ul>
+          <li>Temperature at 2 Meters</li>
+          <li>Minimum Temperature</li>
+          <li>Maximum Temperature</li>
+          <li>Dew Point Temperature</li>
+        </ul>
+      </div>
+      
+      <div class="param-category">
+        <h3>💧 Humidity & Precipitation</h3>
+        <ul>
+          <li>Relative Humidity at 2M</li>
+          <li>Specific Humidity</li>
+          <li>Precipitation Corrected</li>
+          <li>Surface Pressure</li>
+        </ul>
+      </div>
+      
+      <div class="param-category">
+        <h3>💨 Wind & Solar</h3>
+        <ul>
+          <li>Wind Speed at 2M/10M</li>
+          <li>Wind Direction</li>
+          <li>Solar Irradiance</li>
+          <li>Clear Sky Radiation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Implementation -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">⚙️</span>
+      <div>
+        <h2>Technical Implementation</h2>
+        <p class="card-subtitle">How VAYU integrates NASA POWER data</p>
+      </div>
+    </div>
+    
+    <div class="tech-flow">
+      <div class="flow-step">
+        <span class="step-number">1</span>
+        <div class="step-content">
+          <h4>🌍 Location Input</h4>
+          <p>User searches for any global location</p>
+        </div>
+      </div>
+      
+      <div class="flow-arrow">→</div>
+      
+      <div class="flow-step">
+        <span class="step-number">2</span>
+        <div class="step-content">
+          <h4>🛰️ NASA POWER Query</h4>
+          <p>Fetch satellite-derived meteorological data</p>
+        </div>
+      </div>
+      
+      <div class="flow-arrow">→</div>
+      
+      <div class="flow-step">
+        <span class="step-number">3</span>
+        <div class="step-content">
+          <h4>🧮 VAYU Analysis</h4>
+          <p>Calculate personalized comfort score</p>
+        </div>
+      </div>
+      
+      <div class="flow-arrow">→</div>
+      
+      <div class="flow-step">
+        <span class="step-number">4</span>
+        <div class="step-content">
+          <h4>🤖 ML Enhancement</h4>
+          <p>Train on NASA data for predictions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Quality Assurance -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">🔬</span>
+      <div>
+        <h2>Data Quality & Validation</h2>
+        <p class="card-subtitle">NASA's rigorous data processing standards</p>
+      </div>
+    </div>
+    
+    <div class="quality-items">
+      <div class="quality-item">
+        <span class="quality-icon">📡</span>
+        <div>
+          <h4>Satellite Observations</h4>
+          <p>Multiple satellite instruments provide comprehensive Earth observation data</p>
+        </div>
+      </div>
+      
+      <div class="quality-item">
+        <span class="quality-icon">🔄</span>
+        <div>
+          <h4>Data Assimilation</h4>
+          <p>Advanced models combine satellite data with ground observations</p>
+        </div>
+      </div>
+      
+      <div class="quality-item">
+        <span class="quality-icon">✅</span>
+        <div>
+          <h4>Quality Control</h4>
+          <p>Rigorous validation ensures research-grade accuracy</p>
+        </div>
+      </div>
+      
+      <div class="quality-item">
+        <span class="quality-icon">🌐</span>
+        <div>
+          <h4>Global Consistency</h4>
+          <p>Uniform data quality across all geographic regions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Communities -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">👥</span>
+      <div>
+        <h2>NASA POWER Communities</h2>
+        <p class="card-subtitle">Specialized data packages for different applications</p>
+      </div>
+    </div>
+    
+    <div class="communities-grid">
+      {% for key, value in api_info.communities.items() %}
+      <div class="community-item">
+        <span class="community-code">{{ key.upper() }}</span>
+        <div class="community-info">
+          <h4>{{ value }}</h4>
+          <p class="community-desc">
+            {% if key == 'ag' %}Weather data optimized for agricultural and climate applications{% endif %}
+            {% if key == 're' %}Solar and meteorological data for renewable energy systems{% endif %}
+            {% if key == 'sb' %}Building-specific climate data for sustainable infrastructure{% endif %}
+          </p>
+        </div>
+        {% if key == 'ag' %}<span class="community-selected">✅ VAYU Uses</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Get Started -->
+  <div class="nasa-card">
+    <div class="card-header">
+      <span class="card-icon">🚀</span>
+      <div>
+        <h2>Experience NASA-Powered Weather</h2>
+        <p class="card-subtitle">Try VAYU's enhanced satellite-derived comfort predictions</p>
+      </div>
+    </div>
+    
+    <div class="get-started">
+      <p>VAYU now leverages NASA's satellite observations to provide you with:</p>
+      <ul class="benefits-list">
+        <li>🛰️ <strong>Satellite-accurate</strong> weather data from space</li>
+        <li>🌍 <strong>Global coverage</strong> for any location worldwide</li>
+        <li>📈 <strong>Research-grade quality</strong> for precise comfort analysis</li>
+        <li>🤖 <strong>Enhanced ML training</strong> on NASA's comprehensive datasets</li>
+        <li>🏆 <strong>Competition-ready</strong> integration with NASA APIs</li>
+      </ul>
+      
+      <div class="action-buttons">
+        <a href="{{ url_for('index') }}" class="nasa-btn primary">
+          🌤️ Try NASA Weather Now
+        </a>
+        <a href="https://power.larc.nasa.gov/" target="_blank" class="nasa-btn secondary">
+          📖 Learn More About NASA POWER
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NASA Integration Styles -->
+<style>
+.nasa-info-app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.nasa-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+}
+
+.nasa-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.nasa-header p {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.nasa-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-top: 0.5rem;
+}
+
+.card-header h2 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.card-subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.nasa-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  color: white;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.feature-grid, .advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-item, .advantage-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 16px;
+  border-left: 4px solid #667eea;
+}
+
+.feature-icon, .advantage-icon {
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.feature-text {
+  font-weight: 600;
+  color: #333;
+}
+
+.advantage-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #667eea;
+  font-weight: 700;
+}
+
+.advantage-desc {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.parameters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.param-category h3 {
+  margin-bottom: 1rem;
+  color: #667eea;
+  font-weight: 700;
+}
+
+.param-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.param-category li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-weight: 500;
+}
+
+.tech-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.step-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-weight: 700;
+}
+
+.step-content p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: #667eea;
+  font-weight: 800;
+}
+
+.quality-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.quality-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(102, 126, 234, 0.03);
+  border-radius: 16px;
+}
+
+.quality-icon {
+  font-size: 2rem;
+  margin-top: 0.25rem;
+}
+
+.quality-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-weight: 700;
+}
+
+.quality-item p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.communities-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.community-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 16px;
+  position: relative;
+}
+
+.community-code {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.community-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-weight: 700;
+}
+
+.community-desc {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.community-selected {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #4CAF50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.benefits-list {
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.benefits-list li {
+  padding: 0.75rem 0;
+  color: #333;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.nasa-btn {
+  flex: 1;
+  padding: 1.25rem 2rem;
+  border-radius: 16px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 200px;
+}
+
+.nasa-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.nasa-btn.secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.nasa-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  .nasa-header h1 {
+    font-size: 2rem;
+  }
+  
+  .nasa-card {
+    padding: 1.5rem;
+  }
+  
+  .tech-flow {
+    flex-direction: column;
+  }
+  
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+</style>
+{% endblock %}

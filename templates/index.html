@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}{{ location or 'Weather' }} - VAYU 🌬️{% endblock %}
+
+{% block content %}
+<div class="weather-app">
+    <!-- Clean Location Search -->
+    <div class="search-section">
+        <form method="GET" class="location-search">
+            <input type="text" name="location" placeholder="Search city or location..."
+                value="{{ location or user.location or '' }}" class="search-input" autocomplete="off"
+                spellcheck="false">
+            <button type="submit" class="search-btn" aria-label="Search location">
+                🔍
+            </button>
+        </form>
+    </div>
+
+    {% if error %}
+    <!-- Clean Error Display -->
+    <div class="error-message" role="alert">
+        {{ error }}
+    </div>
+    {% else %}
+    <!-- Main Weather Card -->
+    <div class="current-weather">
+        <div class="location-info">
+            <h2>{{ location }}</h2>
+            <p class="update-time">Updated now</p>
+        </div>
+
+        <div class="weather-main">
+            <div class="temperature-container">
+                <span class="temp-value">{{ weather.temperature|int }}</span><span class="temp-unit">°</span>
+            </div>
+
+            <div class="weather-desc">
+                <span class="weather-icon">{{ weather.icon or '🌤️' }}</span>
+                <span class="weather-text">{{ weather.description or 'Current conditions' }}</span>
+            </div>
+        </div>
+
+
+        <!-- VAYU Comfort Score -->
+        <div class="comfort-feature">
+            <div class="comfort-score comfort-{{ comfort.comfort_color }}">
+                <span class="comfort-number">{{ comfort.overall_score }}</span>
+                <span class="comfort-label">Comfort</span>
+            </div>
+            <p class="comfort-text">{{ comfort.comfort_level }}</p>
+            <!-- <p class="ml-prediction">ML Predicts: {{ ml_predicted }}%</p> -->
+        </div>
+    </div>
+
+    <!-- Weather Details Grid -->
+    <div class="weather-details">
+        <div class="detail-item">
+            <span class="detail-icon">💧</span>
+            <span class="detail-label">Humidity</span>
+            <span class="detail-value">{{ weather.relativehumidity_2m|int }}%</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-icon">💨</span>
+            <span class="detail-label">Wind</span>
+            <span class="detail-value">{{ (weather.windspeed_10m * 3.6)|round(1) }} km/h</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-icon">🌧️</span>
+            <span class="detail-label">Rain</span>
+            <span class="detail-value">{{ weather.precipitation_probability|int }}%</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-icon">👁️</span>
+            <span class="detail-label">Feels Like</span>
+            <span class="detail-value">{{ (weather.temperature + 2)|int }}°</span>
+        </div>
+    </div>
+
+    <!-- Hourly Forecast -->
+    <div class="forecast-section">
+        <h3>📊 Hourly Forecast</h3>
+        <div class="hourly-forecast">
+            {% for i in range(12) %}
+            {% set hour_temp = weather.temperature + (i * 0.3) %}
+            {% set hour_time = (i + 1) * 2 %}
+            <div class="hour-item">
+                <span class="hour-time">{{ '%02d:00' % hour_time }}</span>
+                <span class="hour-icon">
+                    {% if i < 3 %}🌤️ {% elif i < 6 %}⛅ {% elif i < 9 %}☁️ {% else %}🌤️ {% endif %} </span>
+                        <span class="hour-temp">{{ hour_temp|int }}°</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- VAYU Personalized Insights -->
+    <div class="recommendations">
+        <h3>🌬️ VAYU Insights</h3>
+        <div class="recommendation-cards">
+            {% for rec in comfort.recommendations %}
+            <div class="rec-card">
+                <span class="rec-icon">
+                    {% if loop.index == 1 %}💡
+                    {% elif 'temperature' in rec.lower() %}🌡️
+                    {% elif 'humidity' in rec.lower() %}💧
+                    {% elif 'wind' in rec.lower() %}💨
+                    {% elif 'rain' in rec.lower() %}☂️
+                    {% else %}✨
+                    {% endif %}
+                </span>
+                <p>{{ rec }}</p>
+            </div>
+            {% endfor %}
+
+            <!-- Comfort Breakdown -->
+            {% if comfort.breakdown %}
+            <div class="rec-card">
+                <span class="rec-icon">📈</span>
+                <div>
+                    <p><strong>Your Comfort Breakdown:</strong></p>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.75rem; font-size: 0.9rem;">
+                        <span>Temperature: {{ comfort.breakdown.temperature }}/100</span>
+                        <span>Humidity: {{ comfort.breakdown.humidity }}/100</span>
+                        <span>Wind: {{ comfort.breakdown.wind }}/100</span>
+                        <span>Precipitation: {{ comfort.breakdown.precipitation }}/100</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="user-actions">
+        <a href="{{ url_for('onboarding') }}" class="action-btn">
+            ⚙️ Comfort Settings
+        </a>
+        <button onclick="provideFeedback('good')" class="action-btn feedback-btn">
+            👍 Accurate
+        </button>
+        <button onclick="provideFeedback('bad')" class="action-btn feedback-btn">
+            👎 Needs Work
+        </button>
+    </div>
+
+    <!-- Weather Summary Card -->
+    <div class="forecast-section" style="text-align: center;">
+        <h3 style="margin-bottom: 1rem;">📋 Today's Summary</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.9rem;">
+            <div>
+                <div style="font-weight: 700; color: #667eea;">{{ weather.temperature|int }}°</div>
+                <div style="opacity: 0.7;">Current</div>
+            </div>
+            <div>
+                <div style="font-weight: 700; color: #667eea;">{{ (weather.temperature + 5)|int }}°</div>
+                <div style="opacity: 0.7;">High</div>
+            </div>
+            <div>
+                <div style="font-weight: 700; color: #667eea;">{{ (weather.temperature - 8)|int }}°</div>
+                <div style="opacity: 0.7;">Low</div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+
+<!-- Clean Feedback Script -->
+<script>
+    function provideFeedback(type) {
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+
+        // Visual feedback
+        btn.innerHTML = type === 'good' ? '✨ Thanks!' : '📝 Noted!';
+        btn.style.opacity = '0.7';
+        btn.disabled = true;
+
+        fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'feedback=' + encodeURIComponent(type)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button after delay
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Feedback error:', error);
+                btn.innerHTML = '❌ Error';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                }, 2000);
+            });
+    }
+
+    // Auto-refresh weather data every 10 minutes
+    let refreshTimer = setTimeout(function () {
+        if (document.visibilityState === 'visible') {
+            window.location.reload();
+        }
+    }, 600000);
+
+    // Clear timer if page becomes hidden
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+            clearTimeout(refreshTimer);
+        }
+    });
+
+    // Add smooth transitions on load
+    document.addEventListener('DOMContentLoaded', function () {
+        // Stagger animations for better UX
+        const elements = document.querySelectorAll('.weather-app > *');
+        elements.forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

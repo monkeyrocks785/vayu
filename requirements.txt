@@ -1,0 +1,9 @@
+Flask
+requests
+python-dotenv
+flask-sqlalchemy
+scikit-learn
+numpy
+pandas
+matplotlib
+gunicorn

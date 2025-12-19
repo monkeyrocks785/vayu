@@ -1,0 +1,532 @@
+<<<<<<< HEAD
+{% extends "base.html" %}
+
+{% block title %}Comfort Settings - VAYU 🌬️{% endblock %}
+
+{% block content %}
+<div class="settings-app">
+    <div class="settings-header">
+        <h2>🌬️ VAYU Comfort Settings</h2>
+        <p>Personalize your weather comfort experience</p>
+    </div>
+
+    <div class="settings-card">
+        <form method="POST" class="settings-form">
+
+            <!-- Temperature Preferences -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🌡️</span>
+                    <div>
+                        <h3>Temperature Comfort</h3>
+                        <p class="setting-desc">What's your ideal temperature range?</p>
+                    </div>
+                </div>
+
+                <div class="temp-range">
+                    <div class="temp-input">
+                        <label>Minimum Comfort</label>
+                        <input type="number" name="temp_min" value="{{ user.temp_min or 18 }}" min="0" max="40"
+                            class="range-input" required>
+                    </div>
+                    <div class="temp-separator">to</div>
+                    <div class="temp-input">
+                        <label>Maximum Comfort</label>
+                        <input type="number" name="temp_max" value="{{ user.temp_max or 26 }}" min="10" max="50"
+                            class="range-input" required>
+                    </div>
+                </div>
+
+                <div class="current-setting">
+                    Current range: {{ user.temp_min or 18 }}°C - {{ user.temp_max or 26 }}°C
+                </div>
+            </div>
+
+            <!-- Humidity Tolerance -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">💧</span>
+                    <div>
+                        <h3>Humidity Tolerance</h3>
+                        <p class="setting-desc">How well do you handle humid conditions?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="low" {% if user.humidity_tolerance=='low'
+                            or not user.humidity_tolerance %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🏜️</span>
+                            <span class="option-title">Low</span>
+                            <span class="option-desc">I prefer dry air</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="medium" {% if
+                            user.humidity_tolerance=='medium' %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌤️</span>
+                            <span class="option-title">Medium</span>
+                            <span class="option-desc">Moderate is fine</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="high" {% if user.humidity_tolerance=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌴</span>
+                            <span class="option-title">High</span>
+                            <span class="option-desc">I love tropical vibes</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.humidity_tolerance or 'low').title() }} tolerance
+                </div>
+            </div>
+
+            <!-- Wind Preference -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">💨</span>
+                    <div>
+                        <h3>Wind Preference</h3>
+                        <p class="setting-desc">How do you feel about breezy weather?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="low" {% if user.wind_tolerance=='low'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🕯️</span>
+                            <span class="option-title">Calm</span>
+                            <span class="option-desc">Still air preferred</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="medium" {% if user.wind_tolerance=='medium' or
+                            not user.wind_tolerance %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🍃</span>
+                            <span class="option-title">Breezy</span>
+                            <span class="option-desc">Light breeze is nice</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="high" {% if user.wind_tolerance=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌪️</span>
+                            <span class="option-title">Windy</span>
+                            <span class="option-desc">Strong winds are fine</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.wind_tolerance or 'medium').title() }} wind tolerance
+                </div>
+            </div>
+
+            <!-- Rain Attitude -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🌧️</span>
+                    <div>
+                        <h3>Rain Attitude</h3>
+                        <p class="setting-desc">What's your relationship with rainy weather?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="dislike" {% if user.rain_preference=='dislike'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">☂️</span>
+                            <span class="option-title">Avoid</span>
+                            <span class="option-desc">I don't like rain</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="neutral" {% if user.rain_preference=='neutral'
+                            or not user.rain_preference %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌦️</span>
+                            <span class="option-title">Neutral</span>
+                            <span class="option-desc">Rain is okay sometimes</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="like" {% if user.rain_preference=='like'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌈</span>
+                            <span class="option-title">Love</span>
+                            <span class="option-desc">Rainy weather is great</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.rain_preference or 'neutral').title() }} about rain
+                </div>
+            </div>
+
+            <!-- Activity Level -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🏃</span>
+                    <div>
+                        <h3>Activity Level</h3>
+                        <p class="setting-desc">How active are you typically outdoors?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="low" {% if user.activity_level=='low'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🛋️</span>
+                            <span class="option-title">Indoor</span>
+                            <span class="option-desc">Mostly indoors</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="medium" {% if user.activity_level=='medium' or
+                            not user.activity_level %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🚶</span>
+                            <span class="option-title">Moderate</span>
+                            <span class="option-desc">Regular walks</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="high" {% if user.activity_level=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🏃</span>
+                            <span class="option-title">Active</span>
+                            <span class="option-desc">Very active outdoors</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.activity_level or 'medium').title() }} activity
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="settings-actions">
+                <button type="submit" class="save-btn">
+                    💾 Save Preferences
+                </button>
+                <a href="{{ url_for('index') }}" class="cancel-btn">
+                    ❌ Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    // Handle radio button selection visually
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const groupName = this.name;
+            document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                r.closest('.option-card').classList.remove('active');
+            });
+            this.closest('.option-card').classList.add('active');
+        });
+    });
+
+    // Initialize active states on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+            radio.closest('.option-card').classList.add('active');
+        });
+    });
+</script>
+=======
+{% extends "base.html" %}
+
+{% block title %}Comfort Settings - VAYU 🌬️{% endblock %}
+
+{% block content %}
+<div class="settings-app">
+    <div class="settings-header">
+        <h2>🌬️ VAYU Comfort Settings</h2>
+        <p>Personalize your weather comfort experience</p>
+    </div>
+
+    <div class="settings-card">
+        <form method="POST" class="settings-form">
+
+            <!-- Temperature Preferences -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🌡️</span>
+                    <div>
+                        <h3>Temperature Comfort</h3>
+                        <p class="setting-desc">What's your ideal temperature range?</p>
+                    </div>
+                </div>
+
+                <div class="temp-range">
+                    <div class="temp-input">
+                        <label>Minimum Comfort</label>
+                        <input type="number" name="temp_min" value="{{ user.temp_min or 18 }}" min="0" max="40"
+                            class="range-input" required>
+                    </div>
+                    <div class="temp-separator">to</div>
+                    <div class="temp-input">
+                        <label>Maximum Comfort</label>
+                        <input type="number" name="temp_max" value="{{ user.temp_max or 26 }}" min="10" max="50"
+                            class="range-input" required>
+                    </div>
+                </div>
+
+                <div class="current-setting">
+                    Current range: {{ user.temp_min or 18 }}°C - {{ user.temp_max or 26 }}°C
+                </div>
+            </div>
+
+            <!-- Humidity Tolerance -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">💧</span>
+                    <div>
+                        <h3>Humidity Tolerance</h3>
+                        <p class="setting-desc">How well do you handle humid conditions?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="low" {% if user.humidity_tolerance=='low'
+                            or not user.humidity_tolerance %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🏜️</span>
+                            <span class="option-title">Low</span>
+                            <span class="option-desc">I prefer dry air</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="medium" {% if
+                            user.humidity_tolerance=='medium' %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌤️</span>
+                            <span class="option-title">Medium</span>
+                            <span class="option-desc">Moderate is fine</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="humidity_tolerance" value="high" {% if user.humidity_tolerance=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌴</span>
+                            <span class="option-title">High</span>
+                            <span class="option-desc">I love tropical vibes</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.humidity_tolerance or 'low').title() }} tolerance
+                </div>
+            </div>
+
+            <!-- Wind Preference -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">💨</span>
+                    <div>
+                        <h3>Wind Preference</h3>
+                        <p class="setting-desc">How do you feel about breezy weather?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="low" {% if user.wind_tolerance=='low'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🕯️</span>
+                            <span class="option-title">Calm</span>
+                            <span class="option-desc">Still air preferred</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="medium" {% if user.wind_tolerance=='medium' or
+                            not user.wind_tolerance %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🍃</span>
+                            <span class="option-title">Breezy</span>
+                            <span class="option-desc">Light breeze is nice</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="wind_tolerance" value="high" {% if user.wind_tolerance=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌪️</span>
+                            <span class="option-title">Windy</span>
+                            <span class="option-desc">Strong winds are fine</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.wind_tolerance or 'medium').title() }} wind tolerance
+                </div>
+            </div>
+
+            <!-- Rain Attitude -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🌧️</span>
+                    <div>
+                        <h3>Rain Attitude</h3>
+                        <p class="setting-desc">What's your relationship with rainy weather?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="dislike" {% if user.rain_preference=='dislike'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">☂️</span>
+                            <span class="option-title">Avoid</span>
+                            <span class="option-desc">I don't like rain</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="neutral" {% if user.rain_preference=='neutral'
+                            or not user.rain_preference %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌦️</span>
+                            <span class="option-title">Neutral</span>
+                            <span class="option-desc">Rain is okay sometimes</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="rain_preference" value="like" {% if user.rain_preference=='like'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🌈</span>
+                            <span class="option-title">Love</span>
+                            <span class="option-desc">Rainy weather is great</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.rain_preference or 'neutral').title() }} about rain
+                </div>
+            </div>
+
+            <!-- Activity Level -->
+            <div class="setting-section">
+                <div class="setting-header">
+                    <span class="setting-icon">🏃</span>
+                    <div>
+                        <h3>Activity Level</h3>
+                        <p class="setting-desc">How active are you typically outdoors?</p>
+                    </div>
+                </div>
+
+                <div class="option-grid">
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="low" {% if user.activity_level=='low'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🛋️</span>
+                            <span class="option-title">Indoor</span>
+                            <span class="option-desc">Mostly indoors</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="medium" {% if user.activity_level=='medium' or
+                            not user.activity_level %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🚶</span>
+                            <span class="option-title">Moderate</span>
+                            <span class="option-desc">Regular walks</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="activity_level" value="high" {% if user.activity_level=='high'
+                            %}checked{% endif %}>
+                        <div class="option-content">
+                            <span class="option-emoji">🏃</span>
+                            <span class="option-title">Active</span>
+                            <span class="option-desc">Very active outdoors</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="current-setting">
+                    Current: {{ (user.activity_level or 'medium').title() }} activity
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="settings-actions">
+                <button type="submit" class="save-btn">
+                    💾 Save Preferences
+                </button>
+                <a href="{{ url_for('index') }}" class="cancel-btn">
+                    ❌ Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    // Handle radio button selection visually
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const groupName = this.name;
+            document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                r.closest('.option-card').classList.remove('active');
+            });
+            this.closest('.option-card').classList.add('active');
+        });
+    });
+
+    // Initialize active states on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+            radio.closest('.option-card').classList.add('active');
+        });
+    });
+</script>
+>>>>>>> 4e64647e8d487574b60f65888c9d2c47f4ce8cd4
+{% endblock %}
