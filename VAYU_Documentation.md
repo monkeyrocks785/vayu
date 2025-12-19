@@ -505,12 +505,8 @@ python app.py
 ### Team: CosmoCatalysts
 
 **Members:**
-- Mayank Garg - Project Lead, Backend Development, ML Implementation
-- Varuchi Maurya - Frontend Development, UI/UX Design
-
-**Event:** NASA Space Apps Challenge 2025  
-**Location:** Delhi, India  
-**Track:** AI/ML  
+- Mayank Garg - Project Lead,ML Implementation, Frontend Development, UI/UX Design
+- Varuchi Maurya - Backend Development, ML Implementation
 
 ---
 
@@ -526,7 +522,7 @@ python app.py
 
 **Document Version:** 1.0  
 **Last Updated:** December 19, 2025  
-**Status:** Final Submission for NASA Space Apps Challenge 2025
+**Status:** Final Submission
 
 ---
 
